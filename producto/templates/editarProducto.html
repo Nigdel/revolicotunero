@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{%block body%}
+<div class="row">
+    <div class="col-4 offset-md-4">
+    <div class=" border rounded p-4">
+        <h5 class="">Editar Producto</h5>
+        <div class="p-1">
+            <form class="p-1" action="/editarproducto/" method="post">{% csrf_token %}
+                <div class="form-group row">
+                    <label for="codigo">Codigo</label>
+                    <input type="number" class="form-control" name="codigo" placeholder="codigo" value="{{ producto.codigo }}" readonly/>
+                </div>
+                <div class="form-group row">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" placeholder="nombre" value="{{ producto.nombre }}" />
+                </div>
+                <div class="form-group row">
+                    <label for="precio">precio</label>
+                    <input type="number" class="form-control" name="precio" placeholder="precio" value="{{ producto.precio }}" />
+                </div>
+                <div class="form-group row">
+                    <label for="cantidad">cantidad</label>
+                    <input type="number" class="form-control" name="cantidad" placeholder="cantidad" value="{{ producto.cantidad }}"/>
+                </div>
+
+                <input type="submit" class="btn btn-success btn-sm text-light" value="Guardar" />
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+{%endblock%}
