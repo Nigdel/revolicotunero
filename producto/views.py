@@ -1,6 +1,9 @@
 from django.shortcuts import render,redirect
 from .models import Producto
 from django.contrib import messages
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 # Create your views here.
 
 def portada(request):
@@ -56,3 +59,13 @@ def comprarProducto(request,codigo):
     else:
         messages.success(request,"No se encontro el producto con codigo %d" , codigo)
     return redirect('/')
+
+@api_view(['POST'])
+def scan_barcode(request):
+    code = request.data.get('code')
+    if code:
+        return Response({"message": f"Código recibido: {code}"})
+    return Response({"error": f"No se envió ningún código{request.data}"}, status=400)
+
+def barcode_scanner(request):
+    return render(request, 'barcode_scanner.html')

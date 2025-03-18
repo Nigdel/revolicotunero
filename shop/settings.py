@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-sql@q-g)h9m7yj+$(a8u9l6!wccxu_(q(7tgdl==tsv**dn+#i
 DEBUG = True
 
 ALLOWED_HOSTS = ['revolicotunero.pythonanywhere.com']
+CSRF_TRUSTED_ORIGINS = ['https://revolicotunero.pythonanywhere.com']
 
 
 # Application definition
@@ -37,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'producto'
+    'producto',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

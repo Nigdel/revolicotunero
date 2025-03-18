@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lector de Códigos de Barra</title>
+</head>
+<body>
+    <h1>Lector de Códigos de Barra</h1>
+    <video id="camera" autoplay playsinline></video>
+    <button onclick="startScanner()">Escanear Código</button>
+    <p id="result"></p>
+
+    <script src="https://unpkg.com/@zxing/browser@0.0.9/umd/index.min.js"></script>
+    <script>
+        async function startScanner() {
+        const video = document.getElementById("camera");
+        const result = document.getElementById("result");
+
+        try {
+            console.log("Intentando acceder a la cámara...");
+
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: "environment" }
+            });
+
+            console.log("Cámara activa");
+            video.srcObject = stream;
+
+            const codeReader = new ZXing.BrowserBarcodeReader();
+            codeReader.decodeFromVideoDevice(undefined, video, (scanResult, err) => {
+                if (scanResult) {
+                    console.log("Código detectado:", scanResult.text);
+                    result.textContent = `Código: ${scanResult.text}`;
+                    video.pause();
+
+                    fetch('/api/scan/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ code: scanResult.text })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                    });
+                }
+            });
+        } catch (error) {
+            console.error("Error con la cámara:", error);
+            alert("No se pudo acceder a la cámara: " + error.message);
+        }
+    }
+
+
+    </script>
+</body>
+</html>
