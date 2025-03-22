@@ -6,6 +6,8 @@ class Producto(models.Model):
     nombre = models.CharField(max_length =50)
     precio = models.PositiveIntegerField()
     cantidad = models.PositiveIntegerField()
+    image = models.CharField(max_length =250)
+
 
     def __str__(self):
         return self.nombre
